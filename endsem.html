@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Booking Form</title>
+    <script>
+        function validateForm() {
+            // Get values from the form
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const dtravel = document.getElementById('dtravel').value;
+            const fromlocation = document.getElementById('fromlocation').value;
+            const tolocation = document.getElementById('tolocation').value;
+            const classSelected = document.querySelector('input[name="class"]:checked');
+            const idproof = document.getElementById('idproof').value;
+
+            // Validate name
+            if (name === "") {
+                alert("Please enter your name.");
+                return false;
+            }
+
+            // Validate email
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+            if (!email.match(emailPattern)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Validate password
+            if (password === "") {
+                alert("Please enter a password.");
+                return false;
+            } else if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return false;
+            }
+
+            // Validate date of travel
+            if (dtravel === "") {
+                alert("Please select a date of travel.");
+                return false;
+            }
+
+            // Validate from location
+            if (fromlocation === "") {
+                alert("Please select a starting location.");
+                return false;
+            }
+
+            // Validate to location
+            if (tolocation === "") {
+                alert("Please select a destination.");
+                return false;
+            } else if (fromlocation === tolocation) {
+                alert("Starting location and destination cannot be the same.");
+                return false;
+            }
+
+            // Validate travel class
+            if (!classSelected) {
+                alert("Please select a travel class.");
+                return false;
+            }
+
+            // If all validations pass, allow form submission
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <form action="endsem.php" method="POST" onsubmit="return validateForm()">
+        <!-- Name -->
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <!-- Email -->
+        <label for="email">Email ID:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <!-- Password (for account creation or login) -->
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <!-- Date Of Travel -->
+        <label for="dtravel">Date Of Travel:</label><br>
+        <input type="date" id="dtravel" name="dtravel" required><br><br>
+
+        <!-- From Location -->
+        <label for="fromlocation">From:</label><br>
+        <select id="fromlocation" name="fromlocation" required>
+            <option value="">Select Location</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Chennai">Chennai</option>
+        </select><br><br>
+
+        <!-- To Location -->
+        <label for="tolocation">To:</label><br>
+        <select id="tolocation" name="tolocation" required>
+            <option value="">Select Destination</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Chennai">Chennai</option>
+        </select><br><br>
+
+        <!-- Travel Class (Radio Buttons) -->
+        <label>Travel Class:</label><br>
+        <input type="radio" id="economy" name="class" value="Economy" required>
+        <label for="economy">Economy</label><br>
+        <input type="radio" id="business" name="class" value="Business" required>
+        <label for="business">Business</label><br>
+        <input type="radio" id="first" name="class" value="First Class" required>
+        <label for="first">First Class</label><br><br>
+
+        <!-- Additional Luggage (Checkbox) -->
+        <label>Add Extra Luggage:</label><br>
+        <input type="checkbox" id="extra-luggage" name="extra_luggage" value="Yes">
+        <label for="extra-luggage">Yes, I would like to add extra luggage</label><br><br>
+
+        <!-- File Upload (for ID proof or other documents) -->
+        <label for="idproof">Upload ID Proof:</label><br>
+        <input type="file" id="idproof" name="idproof"><br><br>
+
+        <!-- Hidden Field (hidden booking ID or session data) -->
+        <input type="hidden" name="booking_id" value="12345"><br>
+
+        <!-- Special Requests (Textarea) -->
+        <label for="requests">Special Requests:</label><br>
+        <textarea id="requests" name="requests" rows="4" cols="50" placeholder="Enter any special requests, such as meal preferences..."></textarea><br><br>
+
+        <!-- Submit and Reset Buttons -->
+        <button type="submit" name="insert">Submit</button><br>
+        <button type="reset">Reset</button><br>
+    </form>
+</body>
+</html>
